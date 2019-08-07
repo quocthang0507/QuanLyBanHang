@@ -112,8 +112,34 @@ namespace QuanLyBanHang
 			}
 		}
 
-		private void DataBinding()
+		private void Btn_Down_Click(object sender, RoutedEventArgs e)
 		{
+			int soLuong = 0;
+			if (int.TryParse(tbx_SoLuong.Text, out soLuong))
+			{
+				if (soLuong > 0)
+					soLuong--;
+			}
+			tbx_SoLuong.Text = soLuong.ToString();
+		}
+
+		private void Btn_Up_Click(object sender, RoutedEventArgs e)
+		{
+			int soLuong = 0;
+			if (int.TryParse(tbx_SoLuong.Text, out soLuong))
+			{
+				soLuong++;
+			}
+			tbx_SoLuong.Text = soLuong.ToString();
+		}
+
+		private void Tbx_SoLuong_KeyDown(object sender, KeyEventArgs e)
+		{
+			int soLuong;
+			if (e.Key < Key.D0 || e.Key > Key.D9)
+			{
+				e.Handled = true;
+			}
 		}
 	}
 }

@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:winforms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         mc:Ignorable="d"
         WindowStyle="None" Style="{DynamicResource MetroWindowStyle}" BorderThickness="0" SnapsToDevicePixels="True" Title="Chương trình Quản lý bán hàng" Height="450" Width="800" ContentRendered="Window_ContentRendered" SizeChanged="Window_SizeChanged">
 	<Window.Resources>
@@ -184,21 +183,23 @@
 						<StackPanel Orientation="Vertical">
 							<StackPanel Orientation="Horizontal" Margin="2,2,2,2">
 								<Label Content="Mã HĐ:" Width="70px"/>
-								<TextBox Name="tbx_MaHD" Width="100px" Height="25px" IsReadOnly="True"/>
+								<TextBox Name="tbx_MaHD" Width="100px" Height="25px" IsReadOnly="True" Text="{Binding SelectedItem.MãHĐ, ElementName=dgDanhMucChon}"/>
 								<Label Content="Tên:" Width="70px"/>
-								<TextBox Name="tbx_Ten" Width="200px" Height="25px" IsReadOnly="True"/>
+								<TextBox Name="tbx_Ten" Width="200px" Height="25px" IsReadOnly="False" Text="{Binding SelectedItem.Tên, ElementName=dgDanhMucChon,Mode=TwoWay}"/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" Margin="2,2,2,2">
 								<Label Content="Đơn giá:" Width="70px"/>
-								<TextBox Name="tbx_DonGia" Width="100px" Height="25px"/>
+								<TextBox Name="tbx_DonGia" Width="100px" Height="25px" Text="{Binding SelectedItem.ĐơnGiá, ElementName=dgDanhMucChon, Mode=TwoWay}"/>
 								<Label Content="Số lượng:" Width="70px"/>
-								<WindowsFormsHost Width="50px" Height="25px">
-									<winforms:NumericUpDown Name="nud_SoLuong" Value="0"/>
-								</WindowsFormsHost>
+								<StackPanel Orientation="Horizontal">
+									<Button Name="btn_Down" Width="20px" Height="20px" Content="-" Background="Transparent" BorderBrush="Transparent" Click="Btn_Down_Click"/>
+									<TextBox Name="tbx_SoLuong" Width="50px" Height="25px" Text="{Binding SelectedItem.SốLượng,ElementName=dgDanhMucChon}" KeyDown="Tbx_SoLuong_KeyDown"/>
+									<Button Name="btn_Up" Width="20px" Height="20px" Content="+" Background="Transparent" BorderBrush="Transparent" Click="Btn_Up_Click"/>
+								</StackPanel>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" Margin="2,2,2,2">
-								<Label Content="Ghi chú:" Width="70px"/>
-								<TextBox Name="tbx_GhiChu" Width="300px" Height="25px"/>
+								<Label Content="Ghi chú:" Width="70px" />
+								<TextBox Name="tbx_GhiChu" Width="300px" Height="25px" Text="{Binding SelectedItem.GhiChú, ElementName=dgDanhMucChon, Mode=TwoWay}"/>
 							</StackPanel>
 						</StackPanel>
 					</GroupBox>
