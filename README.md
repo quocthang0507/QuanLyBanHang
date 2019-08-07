@@ -1,5 +1,6 @@
 # QuanLyBanHang
 > Ứng dụng Quản lý bán hàng - Dành cho quán cà phê quy mô nhỏ
+Sử dụng EPPLUS cho đọc Excel, System.Data.SQLite  cho CSDL SQLite
 
 ## Cài đặt
 

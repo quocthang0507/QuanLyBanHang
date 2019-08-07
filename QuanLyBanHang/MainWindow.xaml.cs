@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 
@@ -49,33 +50,65 @@ namespace QuanLyBanHang
 
 		private void Menu_LoadBangGia_Click(object sender, RoutedEventArgs e)
 		{
-			string excelPath = Excel.OpenFile();
-			string dataPath = Directory.GetCurrentDirectory().ToString() + "\\data.dat";
-			if (excelPath != null)
+			var thread = new Thread(() =>
 			{
-				dgBangGia.ItemsSource = Excel.ReadExcel(excelPath);
-				if (!File.Exists(dataPath))
+				string excelPath = Excel.OpenFile();
+				string dataPath = Directory.GetCurrentDirectory().ToString() + "\\data.dat";
+				if (excelPath != null)
 				{
-					File.Create(dataPath);
+					// Update the main thread using Dispatcher
+					dgBangGia.Dispatcher.Invoke(() => dgBangGia.ItemsSource = Excel.ReadExcel(excelPath));
+					if (!File.Exists(dataPath))
+					{
+						File.Create(dataPath);
+					}
+					StreamWriter streamWriter = new StreamWriter(dataPath);
+					streamWriter.Write(excelPath);
+					streamWriter.Close();
 				}
-				StreamWriter streamWriter = new StreamWriter(dataPath);
-				streamWriter.Write(excelPath);
-				streamWriter.Close();
-			}
+			});
+			thread.Start();
 		}
 
 		private void Window_ContentRendered(object sender, EventArgs e)
 		{
-			string path = Directory.GetCurrentDirectory().ToString() + "\\data.dat";
-			if (File.Exists(path))
+			var thread = new Thread(() =>
 			{
-				StreamReader streamReader = new StreamReader(path);
-				string data = streamReader.ReadLine();
-				if (File.Exists(data))
+				string path = Directory.GetCurrentDirectory().ToString() + "\\data.dat";
+				if (File.Exists(path))
 				{
-					dgBangGia.ItemsSource = Excel.ReadExcel(data);
+					StreamReader streamReader = new StreamReader(path);
+					string data = streamReader.ReadLine();
+					if (File.Exists(data))
+					{
+						dgBangGia.Dispatcher.Invoke(() => dgBangGia.ItemsSource = Excel.ReadExcel(data));
+					}
+					streamReader.Close();
 				}
-				streamReader.Close();
+			});
+			thread.Start();
+		}
+
+		private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			double newWidth = e.NewSize.Width;
+			leftPanel.Width = (int)(newWidth / 4);
+			middlePanel.Width = (int)(newWidth / 4);
+		}
+
+		private void Btn_Them_Click(object sender, RoutedEventArgs e)
+		{
+			BangGia selected = dgBangGia.SelectedItem as BangGia;
+			if (selected != null)
+				dgDanhMucChon.Items.Add(new DonHang(selected));
+		}
+
+		private void Btn_Xoa_Click(object sender, RoutedEventArgs e)
+		{
+			DonHang selected = dgDanhMucChon.SelectedItem as DonHang;
+			if (selected != null)
+			{
+				dgDanhMucChon.Items.Remove(selected);
 			}
 		}
 	}

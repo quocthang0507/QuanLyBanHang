@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLyBanHang"
         mc:Ignorable="d"
-        WindowStyle="None" Style="{DynamicResource MetroWindowStyle}" BorderThickness="0" SnapsToDevicePixels="True" Title="Chương trình Quản lý bán hàng" Height="450" Width="800" ContentRendered="Window_ContentRendered">
+        WindowStyle="None" Style="{DynamicResource MetroWindowStyle}" BorderThickness="0" SnapsToDevicePixels="True" Title="Chương trình Quản lý bán hàng" Height="450" Width="800" ContentRendered="Window_ContentRendered" SizeChanged="Window_SizeChanged">
 	<Window.Resources>
 		<Style x:Key="MetroWindowStyle" TargetType="{x:Type Window}">
 			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
@@ -151,9 +151,10 @@
 			<Grid Width="auto">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="auto"/>
+					<ColumnDefinition Width="50px"/>
 					<ColumnDefinition Width="auto"/>
 				</Grid.ColumnDefinitions>
-				<StackPanel Background="AliceBlue" Width="auto">
+				<StackPanel Name="leftPanel" Background="AliceBlue" Width="auto">
 					<TextBlock Text="Danh mục hiện có:" HorizontalAlignment="Center" FontSize="14"/>
 					<DataGrid Name="dgBangGia" AutoGenerateColumns="False" CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True" FontSize="13">
 						<DataGrid.Columns>
@@ -163,9 +164,19 @@
 						</DataGrid.Columns>
 					</DataGrid>
 				</StackPanel>
-				<StackPanel Grid.Column="2" Width="auto" Orientation="Vertical" VerticalAlignment="Center">
-					<Button x:Name="btn_Them" Content=">>" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50px" Height="25px"/>
-					<Button x:Name="btn_Xoa" Content="&lt;&lt;" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50px" Height="25px"/>
+				<StackPanel Grid.Column="1" Width="50px" Orientation="Vertical" VerticalAlignment="Center">
+					<Button x:Name="btn_Them" Content=">>" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50px" Height="25px" Click="Btn_Them_Click"/>
+					<Button x:Name="btn_Xoa" Content="&lt;&lt;" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50px" Height="25px" Click="Btn_Xoa_Click"/>
+				</StackPanel>
+				<StackPanel Name="middlePanel" Grid.Column="2" Background="AliceBlue" Width="auto">
+					<TextBlock Text="Danh mục chọn:" HorizontalAlignment="Center" FontSize="14"/>
+					<DataGrid Name="dgDanhMucChon" AutoGenerateColumns="False" CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True" FontSize="13">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Mã HĐ" Binding="{Binding MãHĐ}"/>
+							<DataGridTextColumn Header="Tên" Binding="{Binding Tên}"/>
+							<DataGridTextColumn Header="Số lượng" Binding="{Binding SốLượng}"/>
+						</DataGrid.Columns>
+					</DataGrid>
 				</StackPanel>
 
 			</Grid>
