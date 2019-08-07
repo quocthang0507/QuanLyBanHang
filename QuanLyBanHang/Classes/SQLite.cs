@@ -52,14 +52,25 @@ namespace QuanLyBanHang
 			CloseConnection();
 		}
 
-		//public void InsertValue()
-		//{
-		//	CreateConnection();
-		//	string sql = "INSERT INTO " + tb_DH + " VALUES ";
-		//	SQLiteCommand command = new SQLiteCommand(sql, connection);
-		//	command.ExecuteNonQuery();
-		//	CloseConnection();
-		//}
+		/// <summary>
+		/// Thêm Đơn hàng vào CSDL
+		/// </summary>
+		/// <param name="donHang">Đơn hàng cần thêm</param>
+		public void InsertToDH(DonHang donHang)
+		{
+			string sql = string.Format("INSERT INTO " + tb_DH + " (MAHD, TEN, LOAI, DONGIA, SOLUONG, GHICHU) VALUES ('{0}', '{1}', '{2}', {3}, {4}, '{5}')", donHang.MãHĐ, donHang.Tên, donHang.Loại, donHang.ĐơnGiá, donHang.SốLượng, donHang.GhiChú);
+			ExecuteCommand(sql);
+		}
+
+		/// <summary>
+		/// Thêm Hoá đơn vào CSDL
+		/// </summary>
+		/// <param name="hoaDon">Hoá đơn cần thêm</param>
+		public void InsertToHD(HoaDon hoaDon)
+		{
+			string sql = string.Format("INSERT INTO " + tb_HD + " (MAHD, NGAY, TONGTIEN, GIAMGIA, THANHTIEN, DUATRUOC, CONLAI) VALUES ('{0}', '{1}', {2}, {3}, {4}, {5}, {6}", hoaDon.MãHĐ, hoaDon.Ngày, hoaDon.TổngTiền, hoaDon.GiảmGiá, hoaDon.ThànhTiền, hoaDon.ĐưaTrước, hoaDon.CònLại);
+			ExecuteCommand(sql);
+		}
 
 		//public void UpdateValue()
 		//{
