@@ -121,6 +121,7 @@ namespace QuanLyBanHang
 					soLuong--;
 			}
 			tbx_SoLuong.Text = soLuong.ToString();
+			
 		}
 
 		private void Btn_Up_Click(object sender, RoutedEventArgs e)
@@ -135,7 +136,6 @@ namespace QuanLyBanHang
 
 		private void Tbx_SoLuong_KeyDown(object sender, KeyEventArgs e)
 		{
-			int soLuong;
 			if (e.Key < Key.D0 || e.Key > Key.D9)
 			{
 				e.Handled = true;

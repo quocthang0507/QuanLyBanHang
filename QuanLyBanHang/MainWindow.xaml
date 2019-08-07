@@ -193,7 +193,7 @@
 								<Label Content="Số lượng:" Width="70px"/>
 								<StackPanel Orientation="Horizontal">
 									<Button Name="btn_Down" Width="20px" Height="20px" Content="-" Background="Transparent" BorderBrush="Transparent" Click="Btn_Down_Click"/>
-									<TextBox Name="tbx_SoLuong" Width="50px" Height="25px" Text="{Binding SelectedItem.SốLượng,ElementName=dgDanhMucChon}" KeyDown="Tbx_SoLuong_KeyDown"/>
+									<TextBox Name="tbx_SoLuong" Width="50px" Height="25px" Text="{Binding SelectedItem.SốLượng,ElementName=dgDanhMucChon,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" KeyDown="Tbx_SoLuong_KeyDown"/>
 									<Button Name="btn_Up" Width="20px" Height="20px" Content="+" Background="Transparent" BorderBrush="Transparent" Click="Btn_Up_Click"/>
 								</StackPanel>
 							</StackPanel>
