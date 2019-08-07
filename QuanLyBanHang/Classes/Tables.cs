@@ -27,6 +27,7 @@ namespace QuanLyBanHang
 			this.Tên = bangGia.Tên;
 			this.Loại = bangGia.Loại;
 			this.ĐơnGiá = bangGia.ĐơnGiá;
+			this.SốLượng = 1;
 		}
 	}
 

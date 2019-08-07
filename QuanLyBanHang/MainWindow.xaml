@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:QuanLyBanHang"
+		xmlns:winforms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         mc:Ignorable="d"
         WindowStyle="None" Style="{DynamicResource MetroWindowStyle}" BorderThickness="0" SnapsToDevicePixels="True" Title="Chương trình Quản lý bán hàng" Height="450" Width="800" ContentRendered="Window_ContentRendered" SizeChanged="Window_SizeChanged">
 	<Window.Resources>
@@ -151,11 +151,12 @@
 			<Grid Width="auto">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="auto"/>
-					<ColumnDefinition Width="50px"/>
+					<ColumnDefinition Width="60px"/>
+					<ColumnDefinition Width="auto"/>
 					<ColumnDefinition Width="auto"/>
 				</Grid.ColumnDefinitions>
 				<StackPanel Name="leftPanel" Background="AliceBlue" Width="auto">
-					<TextBlock Text="Danh mục hiện có:" HorizontalAlignment="Center" FontSize="14"/>
+					<TextBlock Text="Danh mục hiện có:" HorizontalAlignment="Center" FontSize="14" Margin="5,5,5,5"/>
 					<DataGrid Name="dgBangGia" AutoGenerateColumns="False" CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True" FontSize="13">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Tên" Binding="{Binding Tên}"/>
@@ -164,12 +165,12 @@
 						</DataGrid.Columns>
 					</DataGrid>
 				</StackPanel>
-				<StackPanel Grid.Column="1" Width="50px" Orientation="Vertical" VerticalAlignment="Center">
-					<Button x:Name="btn_Them" Content=">>" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50px" Height="25px" Click="Btn_Them_Click"/>
-					<Button x:Name="btn_Xoa" Content="&lt;&lt;" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50px" Height="25px" Click="Btn_Xoa_Click"/>
+				<StackPanel Grid.Column="1" Width="50px" Orientation="Vertical" VerticalAlignment="Center" Margin="5,0,5,0">
+					<Button x:Name="btn_Them" Content=">>" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50px" Height="25px" Click="Btn_Them_Click" BorderBrush="Transparent"/>
+					<Button x:Name="btn_Xoa" Content="&lt;&lt;" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50px" Height="25px" Click="Btn_Xoa_Click" BorderBrush="Transparent" Margin="0,5,0,0"/>
 				</StackPanel>
 				<StackPanel Name="middlePanel" Grid.Column="2" Background="AliceBlue" Width="auto">
-					<TextBlock Text="Danh mục chọn:" HorizontalAlignment="Center" FontSize="14"/>
+					<TextBlock Text="Danh mục chọn:" HorizontalAlignment="Center" FontSize="14" Margin="5,5,5,5"/>
 					<DataGrid Name="dgDanhMucChon" AutoGenerateColumns="False" CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True" FontSize="13">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Mã HĐ" Binding="{Binding MãHĐ}"/>
@@ -178,7 +179,30 @@
 						</DataGrid.Columns>
 					</DataGrid>
 				</StackPanel>
-
+				<StackPanel Grid.Column="3" Width="auto" Margin="5,0,0,0">
+					<GroupBox Header="Thông tin chi tiết:" FontSize="14">
+						<StackPanel Orientation="Vertical">
+							<StackPanel Orientation="Horizontal" Margin="2,2,2,2">
+								<Label Content="Mã HĐ:" Width="70px"/>
+								<TextBox Name="tbx_MaHD" Width="100px" Height="25px" IsReadOnly="True"/>
+								<Label Content="Tên:" Width="70px"/>
+								<TextBox Name="tbx_Ten" Width="200px" Height="25px" IsReadOnly="True"/>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal" Margin="2,2,2,2">
+								<Label Content="Đơn giá:" Width="70px"/>
+								<TextBox Name="tbx_DonGia" Width="100px" Height="25px"/>
+								<Label Content="Số lượng:" Width="70px"/>
+								<WindowsFormsHost Width="50px" Height="25px">
+									<winforms:NumericUpDown Name="nud_SoLuong" Value="0"/>
+								</WindowsFormsHost>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal" Margin="2,2,2,2">
+								<Label Content="Ghi chú:" Width="70px"/>
+								<TextBox Name="tbx_GhiChu" Width="300px" Height="25px"/>
+							</StackPanel>
+						</StackPanel>
+					</GroupBox>
+				</StackPanel>
 			</Grid>
 		</DockPanel>
 	</Grid>

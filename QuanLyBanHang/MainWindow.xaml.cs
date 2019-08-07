@@ -111,5 +111,9 @@ namespace QuanLyBanHang
 				dgDanhMucChon.Items.Remove(selected);
 			}
 		}
+
+		private void DataBinding()
+		{
+		}
 	}
 }
