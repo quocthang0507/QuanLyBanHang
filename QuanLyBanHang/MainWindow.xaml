@@ -145,8 +145,8 @@
 					</DataGrid>
 				</StackPanel>
 				<StackPanel Grid.Column="1" Width="50px" Orientation="Vertical" VerticalAlignment="Center" Margin="6,88.598,5,166">
-					<Button x:Name="btn_Them" Content=">>" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50px" Height="25px" Click="Btn_Them_Click" BorderBrush="Transparent"/>
-					<Button x:Name="btn_Xoa" Content="&lt;&lt;" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50px" Height="25px" Click="Btn_Xoa_Click" BorderBrush="Transparent" Margin="0,5,0,0"/>
+					<Button x:Name="btn_Them" Content=">>" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50px" Height="25px" Click="Btn_Them_Click" BorderBrush="Transparent" ToolTip="Chọn từ Danh mục hiện có vào Danh mục chọn của khách hàng"/>
+					<Button x:Name="btn_Xoa" Content="&lt;&lt;" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50px" Height="25px" Click="Btn_Xoa_Click" BorderBrush="Transparent" Margin="0,5,0,0" ToolTip="Xoá một Danh mục chọn của khách hàng"/>
 				</StackPanel>
 				<StackPanel Name="middlePanel" Grid.Column="2" Width="auto" Background="AliceBlue">
 					<TextBlock Text="Danh mục chọn:" HorizontalAlignment="Center" FontSize="14" Margin="5,5,5,5"/>
@@ -163,23 +163,23 @@
 						<StackPanel Orientation="Vertical">
 							<StackPanel Orientation="Horizontal" Margin="2,2,2,2">
 								<Label Content="Mã HĐ:" Width="80px"/>
-								<TextBox Name="tbx_MaHD" Width="120px" Height="25px" IsReadOnly="True" Text="{Binding SelectedItem.MãHĐ, ElementName=dgDanhMucChon}" TextAlignment="Center"/>
+								<TextBox Name="tbx_MaHD" Width="120px" Height="25px" IsReadOnly="True" Text="{Binding SelectedItem.MãHĐ, ElementName=dgDanhMucChon}" TextAlignment="Center" ToolTip="Mã hoá đơn"/>
 								<Label Content="Tên:" Width="80px" Margin="20,0,0,0"/>
-								<TextBox Name="tbx_Ten" Width="300px" Height="25px" IsReadOnly="False" Text="{Binding SelectedItem.Tên, ElementName=dgDanhMucChon,Mode=TwoWay}" TextAlignment="Center"/>
+								<TextBox Name="tbx_Ten" Width="300px" Height="25px" IsReadOnly="False" Text="{Binding SelectedItem.Tên, ElementName=dgDanhMucChon,Mode=TwoWay}" TextAlignment="Center" ToolTip="Tên"/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" Margin="2,2,2,2">
 								<Label Content="Đơn giá:" Width="80px"/>
-								<TextBox Name="tbx_DonGia" Width="120px" Height="25px" Text="{Binding SelectedItem.ĐơnGiá, ElementName=dgDanhMucChon, Mode=TwoWay}" TextAlignment="Center"/>
+								<TextBox Name="tbx_DonGia" Width="120px" Height="25px" Text="{Binding SelectedItem.ĐơnGiá, ElementName=dgDanhMucChon, Mode=TwoWay}" TextAlignment="Center" ToolTip="Đơn giá"/>
 								<Label Content="Số lượng:" Width="80px" Margin="20,0,0,0"/>
 								<StackPanel Orientation="Horizontal">
-									<Button Name="btn_Down" Width="20px" Height="20px" Content="-" Background="Transparent" BorderBrush="Transparent" Click="Btn_Down_Click"/>
-									<TextBox Name="tbx_SoLuong" Width="50px" Height="25px" Text="{Binding SelectedItem.SốLượng,ElementName=dgDanhMucChon,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" KeyDown="Tbx_SoLuong_KeyDown" TextAlignment="Center"/>
-									<Button Name="btn_Up" Width="20px" Height="20px" Content="+" Background="Transparent" BorderBrush="Transparent" Click="Btn_Up_Click"/>
+									<Button Name="btn_Down" Width="20px" Height="20px" Content="-" Background="Transparent" BorderBrush="Transparent" Click="Btn_Down_Click" ToolTip="Giảm"/>
+									<TextBox Name="tbx_SoLuong" Width="50px" Height="25px" Text="{Binding SelectedItem.SốLượng,ElementName=dgDanhMucChon,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" KeyDown="Tbx_SoLuong_KeyDown" TextAlignment="Center" ToolTip="Số lượng của đơn hàng này"/>
+									<Button Name="btn_Up" Width="20px" Height="20px" Content="+" Background="Transparent" BorderBrush="Transparent" Click="Btn_Up_Click" ToolTip="Tăng"/>
 								</StackPanel>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" Margin="2,2,2,2">
 								<Label Content="Ghi chú:" Width="80px" />
-								<TextBox Name="tbx_GhiChu" Width="520px" Height="25px" Text="{Binding SelectedItem.GhiChú, ElementName=dgDanhMucChon, Mode=TwoWay}" TextAlignment="Center"/>
+								<TextBox Name="tbx_GhiChu" Width="520px" Height="25px" Text="{Binding SelectedItem.GhiChú, ElementName=dgDanhMucChon, Mode=TwoWay}" TextAlignment="Center" ToolTip="Thông tin thêm mà khách hàng dặn"/>
 							</StackPanel>
 						</StackPanel>
 					</GroupBox>
@@ -187,23 +187,24 @@
 						<StackPanel Orientation="Vertical">
 							<StackPanel Orientation="Horizontal" Margin="2">
 								<Label Content="Tổng tiền:" Width="80px"/>
-								<TextBox x:Name="tbx_TongTien" Text="0" Width="120px" Height="25px" IsReadOnly="True" TextAlignment="Center"/>
+								<TextBox x:Name="tbx_TongTien" Text="0" Width="120px" Height="25px" IsReadOnly="True" TextAlignment="Center" ToolTip="Tổng tiền"/>
 								<Label Content="% Giảm:" Width="80px" Margin="20,0,0,0"/>
-								<TextBox x:Name="tbx_GiamGia" Width="75px" Height="25px" Text="0" TextAlignment="Center"/>
+								<TextBox x:Name="tbx_GiamGia" Width="75px" Height="25px" Text="0" TextAlignment="Center" ToolTip="% giảm giá (nếu có)"/>
 								<Label Content="Thành tiền:" Width="80px" Margin="20,0,0,0"/>
-								<TextBox x:Name="tbx_ThanhTien" Text="0" IsReadOnly="True" Width="120px" Height="25px" TextAlignment="Center"/>
+								<TextBox x:Name="tbx_ThanhTien" Text="0" IsReadOnly="True" Width="120px" Height="25px" TextAlignment="Center" ToolTip="Số tiền phải trả"/>
 							</StackPanel>
 							<StackPanel Orientation="Horizontal" Margin="2">
 								<Label Content="Số tiền đưa trước:" Width="130px"/>
-								<TextBox x:Name="tbx_DuaTruoc" Width="120px" Height="25px" Text="0" TextAlignment="Center"/>
+								<TextBox x:Name="tbx_DuaTruoc" Width="120px" Height="25px" Text="0" TextAlignment="Center" ToolTip="Số tiền Khách hàng đưa"/>
 								<Label Content="Số tiền còn lại:" Width="130px" Margin="20,0,0,0"/>
-								<TextBox x:Name="tbx_ConLai" Text="0" IsReadOnly="True" Width="120px" Height="25px" TextAlignment="Center"/>
+								<TextBox x:Name="tbx_ConLai" Text="0" IsReadOnly="True" Width="120px" Height="25px" TextAlignment="Center" ToolTip="Số tiền thối lại cho Khách hàng"/>
 							</StackPanel>
 						</StackPanel>
 					</GroupBox>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-						<Button x:Name="btn_In" Content="In hoá đơn" Width="100px" FontSize="14"/>
-						<Button x:Name="btn_Luu" Content="Lưu vào CSDL" Width="100px" FontSize="14" Margin="20,0,0,0"/>
+						<Button x:Name="btn_In" Content="In hoá đơn" Width="100px" FontSize="14" ToolTip="In hoá đơn"/>
+						<Button x:Name="btn_ThanhToan" Content="Thanh toán" Width="100px" FontSize="14" Margin="20,0,0,0" ToolTip="Đánh dấu đơn hàng đã thanh toán và lưu vào cơ sở dữ liệu"/>
+						<Button x:Name="btn_ChuaThanhToan" Content="Cho vào danh sách chờ" FontSize="14" Margin="20,0,0,0" ToolTip="Đánh dấu đơn hàng chưa thanh toán và cho vào bảng bên dưới"/>
 					</StackPanel>
 					<GroupBox Header="Hoá đơn chưa thanh toán:" FontSize="14" Margin="0,10,0,0">
 						<DataGrid Name="dgHoaDon" AutoGenerateColumns="False" CanUserSortColumns="True" ColumnWidth="auto" IsReadOnly="True" FontSize="13" BorderBrush="Black">
