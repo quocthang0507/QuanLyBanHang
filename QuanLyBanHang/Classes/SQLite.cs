@@ -3,6 +3,9 @@ using System.Data.SQLite;
 
 namespace QuanLyBanHang
 {
+	/// <summary>
+	/// Lớp hỗ trợ thao tác trên CSDL SQLite
+	/// </summary>
 	public class SQLite
 	{
 		private SQLiteConnection connection = new SQLiteConnection();
@@ -31,11 +34,11 @@ namespace QuanLyBanHang
 		/// <summary>
 		/// Tạo một CSDL và tạo bảng HoaDon, DonHang vào CSDL đó
 		/// </summary>
-		public void CreateTable()
+		public void CreateDatabase()
 		{
 			SQLiteConnection.CreateFile(SqlFile);
-			string tb_HD = "CREATE TABLE IF NOT EXISTS " + SQLite.tb_HD + "MAHD TEXT PRIMARY KEY, NGAY DATETIME, TONGTIEN INT, GIAMGIA FLOAT, THANHTIEN FLOAT, DUATRUOC FLOAT, CONLAI FLOAT";
-			string tb_DH = "CREATE TABLE IF NOT EXISTS " + SQLite.tb_DH + "([ID] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, MAHD TEXT, TEN TEXT, LOAI TEXT, DONGIA INT, SOLUONG INT, GHICHU TEXT, FOREIGN KEY(MAHD) REFERENCES HOADON(MAHD)";
+			string tb_HD = "CREATE TABLE IF NOT EXISTS " + SQLite.tb_HD + "(MAHD TEXT PRIMARY KEY, NGAY DATETIME, TONGTIEN INT, GIAMGIA FLOAT, THANHTIEN FLOAT, DUATRUOC FLOAT, CONLAI FLOAT)";
+			string tb_DH = "CREATE TABLE IF NOT EXISTS " + SQLite.tb_DH + "([ID] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, MAHD TEXT, TEN TEXT, LOAI TEXT, DONGIA INT, SOLUONG INT, GHICHU TEXT, FOREIGN KEY(MAHD) REFERENCES HOADON(MAHD))";
 			ExecuteCommand(tb_DH);
 			ExecuteCommand(tb_HD);
 		}

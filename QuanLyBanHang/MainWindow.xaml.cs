@@ -11,10 +11,20 @@ namespace QuanLyBanHang
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		SQLite SQLiteHelper;
+
 		public MainWindow()
 		{
 			InitializeComponent();
 		}
+
+		private void Window_ContentRendered(object sender, EventArgs e)
+		{
+			LoadBangGia();
+			TaoCSDL();
+		}
+
+		#region Events
 
 		private void PART_TITLEBAR_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
@@ -70,25 +80,6 @@ namespace QuanLyBanHang
 			thread.Start();
 		}
 
-		private void Window_ContentRendered(object sender, EventArgs e)
-		{
-			var thread = new Thread(() =>
-			{
-				string path = Directory.GetCurrentDirectory().ToString() + "\\data.dat";
-				if (File.Exists(path))
-				{
-					StreamReader streamReader = new StreamReader(path);
-					string data = streamReader.ReadLine();
-					if (File.Exists(data))
-					{
-						dgBangGia.Dispatcher.Invoke(() => dgBangGia.ItemsSource = Excel.ReadExcel(data));
-					}
-					streamReader.Close();
-				}
-			});
-			thread.Start();
-		}
-
 		private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
 			double newWidth = e.NewSize.Width;
@@ -121,7 +112,7 @@ namespace QuanLyBanHang
 					soLuong--;
 			}
 			tbx_SoLuong.Text = soLuong.ToString();
-			
+
 		}
 
 		private void Btn_Up_Click(object sender, RoutedEventArgs e)
@@ -141,5 +132,49 @@ namespace QuanLyBanHang
 				e.Handled = true;
 			}
 		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Load Bảng giá từ file excel mỗi khi khởi động ứng dụng
+		/// </summary>
+		private void LoadBangGia()
+		{
+			var thread = new Thread(() =>
+			{
+				string path = Directory.GetCurrentDirectory().ToString() + "\\data.dat";
+				if (File.Exists(path))
+				{
+					StreamReader streamReader = new StreamReader(path);
+					string data = streamReader.ReadLine();
+					if (File.Exists(data))
+					{
+						dgBangGia.Dispatcher.Invoke(() => dgBangGia.ItemsSource = Excel.ReadExcel(data));
+					}
+					streamReader.Close();
+				}
+			});
+			thread.Start();
+		}
+
+		/// <summary>
+		/// Tạo cơ sở dữ liệu SQLite
+		/// </summary>
+		private void TaoCSDL()
+		{
+			SQLiteHelper = new SQLite();
+			var thread = new Thread(() =>
+			  {
+				  if (!File.Exists(Directory.GetCurrentDirectory() + "\\" + SQLite.SqlFile))
+				  {
+					  SQLiteHelper.CreateDatabase();
+				  }
+			  });
+			thread.Start();
+		}
+
+		#endregion
 	}
 }

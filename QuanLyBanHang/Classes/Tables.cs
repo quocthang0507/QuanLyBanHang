@@ -2,6 +2,9 @@
 
 namespace QuanLyBanHang
 {
+	/// <summary>
+	/// Lớp Bảng giá
+	/// </summary>
 	public class BangGia
 	{
 		public string Tên { get; set; }
@@ -9,6 +12,9 @@ namespace QuanLyBanHang
 		public int ĐơnGiá { get; set; }
 	}
 
+	/// <summary>
+	/// Lớp Đơn hàng
+	/// </summary>
 	public class DonHang
 	{
 		public string MãHĐ { get; set; }
@@ -31,6 +37,9 @@ namespace QuanLyBanHang
 		}
 	}
 
+	/// <summary>
+	/// Lớp Hoá đơn
+	/// </summary>
 	public class HoaDon
 	{
 		public string MãHĐ { get; set; }
