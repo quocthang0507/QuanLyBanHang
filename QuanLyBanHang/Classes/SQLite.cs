@@ -75,6 +75,18 @@ namespace QuanLyBanHang
 			ExecuteCommand(sql);
 		}
 
+		public void UpdateHD(HoaDon hoaDon)
+		{
+			string sql = string.Format("UPDATE  " + tb_HD + " SET NGAY = '{0}', TONGTIEN = '{1}', GIAMGIA = {2}, THANHTIEN = {3}, DUATRUOC = {4}, CONLAI = {5} WHERE MAHD = '" + hoaDon.MãHĐ + "'", hoaDon.Ngày, hoaDon.TổngTiền, hoaDon.GiảmGiá, hoaDon.ThànhTiền, hoaDon.ĐưaTrước, hoaDon.CònLại);
+			ExecuteCommand(sql);
+		}
+
+		public void UpdateDH(DonHang donHang)
+		{
+			string sql = string.Format("UPDATE " + tb_DH + " SET MAHD = '{0}', TEN = '{1}', LOAI = '{2}', DONGIA = {3}, SOLUONG = {4}, GHICHU = '{5} WHERE [ID] = {6}'", donHang.MãHĐ, donHang.Tên, donHang.Loại, donHang.ĐơnGiá, donHang.SốLượng, donHang.GhiChú, donHang.ID);
+			ExecuteCommand(sql);
+		}
+
 		//public void UpdateValue()
 		//{
 		//	CreateConnection();
@@ -106,6 +118,19 @@ namespace QuanLyBanHang
 			adapter.Fill(dataSet);
 			CloseConnection();
 			return dataSet;
+		}
+
+		/// <summary>
+		/// Lấy mã hoá đơn khả dụng
+		/// </summary>
+		/// <returns>Mã hoá đơn</returns>
+		public string GetBillID()
+		{
+			DataSet data = GetValues("SELECT * FROM " + tb_HD);
+			var table = data.Tables[0];
+			int count = table.Rows.Count;
+			if (count == 0)
+				return HoaDon.TaoMaHD(1);
 		}
 	}
 }

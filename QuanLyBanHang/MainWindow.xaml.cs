@@ -173,6 +173,7 @@ namespace QuanLyBanHang
 				  }
 			  });
 			thread.Start();
+			SQLiteHelper.GetBillID();
 		}
 
 		#endregion
