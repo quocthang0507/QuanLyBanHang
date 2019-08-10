@@ -131,6 +131,8 @@ namespace QuanLyBanHang
 			int count = table.Rows.Count;
 			if (count == 0)
 				return HoaDon.TaoMaHD(1);
+			else
+				return HoaDon.TaoMaHD(count);
 		}
 	}
 }

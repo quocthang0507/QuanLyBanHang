@@ -91,7 +91,11 @@ namespace QuanLyBanHang
 		{
 			BangGia selected = dgBangGia.SelectedItem as BangGia;
 			if (selected != null)
-				dgDanhMucChon.Items.Add(new DonHang(selected));
+			{
+				DonHang donHang = new DonHang(selected);
+				donHang.MãHĐ = SQLiteHelper.GetBillID();
+				dgDanhMucChon.Items.Add(donHang);
+			}
 		}
 
 		private void Btn_Xoa_Click(object sender, RoutedEventArgs e)
@@ -130,6 +134,48 @@ namespace QuanLyBanHang
 			if (e.Key < Key.D0 || e.Key > Key.D9)
 			{
 				e.Handled = true;
+			}
+		}
+
+		private void Tbx_GiamGia_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key < Key.D0 || e.Key > Key.D9)
+			{
+				e.Handled = true;
+			}
+		}
+
+		private void Btn_TinhTien_Click(object sender, RoutedEventArgs e)
+		{
+			var danhMucChon = dgDanhMucChon.Items;
+			int tong = 0;
+			foreach (DonHang item in danhMucChon)
+			{
+				tong += item.ĐơnGiá * item.SốLượng;
+			}
+			tbx_TongTien.Text = tong.ToString();
+			Tbx_TongTien_TextChanged(sender, null);
+		}
+
+		private void Tbx_TongTien_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+		{
+			int tongTien, giamGia = 0;
+			bool tt = int.TryParse(tbx_TongTien.Text, out tongTien);    //Nếu tổng tiền có số
+			int.TryParse(tbx_GiamGia.Text, out giamGia);      //Mặc định là giảm giá 0%
+			if (tt)
+			{
+				tbx_ThanhTien.Text = "" + tongTien * (100 - giamGia) / 100;
+			}
+		}
+
+		private void Tbx_DuaTruoc_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+		{
+			int thanhTien = 0, duaTruoc;
+			int.TryParse(tbx_ThanhTien.Text, out thanhTien);    //Mặc định là thành tiền bằng 0
+			bool dt = int.TryParse(tbx_DuaTruoc.Text, out duaTruoc);
+			if (dt)
+			{
+				tbx_ConLai.Text = "" + (duaTruoc - thanhTien);
 			}
 		}
 
@@ -173,9 +219,9 @@ namespace QuanLyBanHang
 				  }
 			  });
 			thread.Start();
-			SQLiteHelper.GetBillID();
 		}
 
 		#endregion
+
 	}
 }
