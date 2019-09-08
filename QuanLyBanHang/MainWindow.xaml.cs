@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -12,6 +14,7 @@ namespace QuanLyBanHang
 	public partial class MainWindow : Window
 	{
 		SQLite SQLiteHelper;
+		string dateFormat = "dd/MM/yyyy";
 
 		public MainWindow()
 		{
@@ -147,13 +150,14 @@ namespace QuanLyBanHang
 
 		private void Btn_TinhTien_Click(object sender, RoutedEventArgs e)
 		{
-			var danhMucChon = dgDanhMucChon.Items;
 			int tong = 0;
-			foreach (DonHang item in danhMucChon)
+			foreach (DonHang item in dgDanhMucChon.Items)
 			{
 				tong += item.ĐơnGiá * item.SốLượng;
 			}
 			tbx_TongTien.Text = tong.ToString();
+			if (tbx_DuaTruoc.Text == "")
+				tbx_DuaTruoc.Text = "0";
 			Tbx_TongTien_TextChanged(sender, null);
 		}
 
@@ -161,7 +165,10 @@ namespace QuanLyBanHang
 		{
 			int tongTien, giamGia = 0;
 			bool tt = int.TryParse(tbx_TongTien.Text, out tongTien);    //Nếu tổng tiền có số
-			int.TryParse(tbx_GiamGia.Text, out giamGia);      //Mặc định là giảm giá 0%
+			if (!int.TryParse(tbx_GiamGia.Text, out giamGia))      //Mặc định là giảm giá 0%
+			{
+				tbx_GiamGia.Text = "0";
+			}
 			if (tt)
 			{
 				tbx_ThanhTien.Text = "" + tongTien * (100 - giamGia) / 100;
@@ -176,6 +183,24 @@ namespace QuanLyBanHang
 			if (dt)
 			{
 				tbx_ConLai.Text = "" + (duaTruoc - thanhTien);
+			}
+		}
+
+		private void Btn_ThanhToan_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = MessageBox.Show("Bạn có chắc chắn?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+			if (dialog == MessageBoxResult.Yes)
+			{
+				ChuyenDonHang_HoaDon();
+			}
+		}
+
+		private void Btn_ChuaThanhToan_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = MessageBox.Show("Bạn có chắc chắn?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+			if (dialog == MessageBoxResult.Yes)
+			{
+				ChuyenDonHang_HoaDon();
 			}
 		}
 
@@ -223,5 +248,42 @@ namespace QuanLyBanHang
 
 		#endregion
 
+		private bool KiemTraTinhTien()
+		{
+			return tbx_ThanhTien.Text != null && tbx_ThanhTien.Text != "";
+		}
+
+		/// <summary>
+		/// Chuyển các đơn hàng thành hoá đơn
+		/// </summary>
+		private void ChuyenDonHang_HoaDon()
+		{
+			//Kiểm tra có đơn hàng nào chưa
+			if (dgDanhMucChon.Items.Count == 0)
+				return;
+			if (!KiemTraTinhTien())
+				Btn_TinhTien_Click(this, null);
+
+			//Tạo một hoá đơn mới
+			string maHD = SQLiteHelper.GetBillID();
+			HoaDon hoaDon = new HoaDon(maHD, DateTime.Now.ToString(dateFormat),
+				Convert.ToDouble(tbx_TongTien.Text),
+				Convert.ToDouble(tbx_GiamGia.Text),
+				Convert.ToDouble(tbx_ThanhTien.Text),
+				Convert.ToDouble(tbx_DuaTruoc.Text),
+				Convert.ToDouble(tbx_ConLai.Text));
+
+			//Tạo các đơn hàng liên quan đến hoá đơn
+			List<DonHang> donHang = dgDanhMucChon.Items.Cast<DonHang>().ToList();
+
+			//Thêm hoá đơn vào CSDL
+			SQLiteHelper.InsertToHD(hoaDon);
+
+			//Thêm các đơn hàng vào CSDL
+			foreach (var item in donHang)
+			{
+				SQLiteHelper.InsertToDH(item);
+			}
+		}
 	}
 }

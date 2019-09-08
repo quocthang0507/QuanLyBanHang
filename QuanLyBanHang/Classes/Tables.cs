@@ -61,5 +61,21 @@ namespace QuanLyBanHang
 			DateTime now = DateTime.Now;
 			return now.ToString("ddMMyy") + stt.ToString("000");
 		}
+
+		public HoaDon(string mãHĐ, string ngày, double tổngTiền, double giảmGiá, double thànhTiền, double đưaTrước, double cònLại)
+		{
+			MãHĐ = mãHĐ;
+			Ngày = ngày;
+			TổngTiền = tổngTiền;
+			GiảmGiá = giảmGiá;
+			ThànhTiền = thànhTiền;
+			ĐưaTrước = đưaTrước;
+			CònLại = cònLại;
+		}
+
+		public HoaDon()
+		{
+
+		}
 	}
 }
