@@ -42,7 +42,7 @@ namespace QuanLyBanHang
 					string ten = worksheet.Cells[i, 1].Value.ToString();
 					string loai = worksheet.Cells[i, 2].Value.ToString();
 					int donGia = int.Parse(worksheet.Cells[i, 3].Value.ToString());
-					bangGia.Add(new BangGia() { Tên = ten, Loại = loai, ĐơnGiá = donGia });
+					bangGia.Add(new BangGia(ten, loai, donGia));
 				}
 			}
 			return bangGia;

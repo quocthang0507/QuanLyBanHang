@@ -3,17 +3,29 @@
 namespace QuanLyBanHang
 {
 	/// <summary>
-	/// Lớp Bảng giá
+	/// Bảng Bảng giá
 	/// </summary>
 	public class BangGia
 	{
 		public string Tên { get; set; }
 		public string Loại { get; set; }
 		public int ĐơnGiá { get; set; }
+
+		public BangGia()
+		{
+
+		}
+
+		public BangGia(string tên, string loại, int đơnGiá)
+		{
+			Tên = tên;
+			Loại = loại;
+			ĐơnGiá = đơnGiá;
+		}
 	}
 
 	/// <summary>
-	/// Lớp Đơn hàng
+	/// Bảng Đơn hàng
 	/// </summary>
 	public class DonHang
 	{
@@ -24,6 +36,11 @@ namespace QuanLyBanHang
 		public int ĐơnGiá { get; set; }
 		public int SốLượng { get; set; }
 		public string GhiChú { get; set; }
+
+		public DonHang()
+		{
+
+		}
 
 		/// <summary>
 		/// Chuyển Bảng giá thành Đơn hàng
@@ -39,7 +56,7 @@ namespace QuanLyBanHang
 	}
 
 	/// <summary>
-	/// Lớp Hoá đơn
+	/// Bảng Hoá đơn
 	/// </summary>
 	public class HoaDon
 	{
@@ -50,6 +67,11 @@ namespace QuanLyBanHang
 		public double ThànhTiền { get; set; }
 		public double ĐưaTrước { get; set; }
 		public double CònLại { get; set; }
+
+		public HoaDon()
+		{
+
+		}
 
 		/// <summary>
 		/// Tạo mã hoá đơn dựa vào số thứ tự
@@ -71,11 +93,6 @@ namespace QuanLyBanHang
 			ThànhTiền = thànhTiền;
 			ĐưaTrước = đưaTrước;
 			CònLại = cònLại;
-		}
-
-		public HoaDon()
-		{
-
 		}
 	}
 }
