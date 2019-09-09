@@ -18,7 +18,7 @@ namespace QuanLyBanHang
 		/// </summary>
 		public void CreateConnection()
 		{
-			string str = "Data Source=" + SqlFile + ";Version=3";
+			string str = "Data Source=" + SqlFile + ";Version=3;datetimeformat=CurrentCulture";
 			connection.ConnectionString = str;
 			connection.Open();
 		}
@@ -37,8 +37,8 @@ namespace QuanLyBanHang
 		public void CreateDatabase()
 		{
 			SQLiteConnection.CreateFile(SqlFile);
-			string tb_HD = "CREATE TABLE IF NOT EXISTS " + SQLite.tb_HD + "(MAHD TEXT PRIMARY KEY, NGAY DATETIME, TONGTIEN INT, GIAMGIA FLOAT, THANHTIEN FLOAT, DUATRUOC FLOAT, CONLAI FLOAT)";
-			string tb_DH = "CREATE TABLE IF NOT EXISTS " + SQLite.tb_DH + "([ID] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, MAHD TEXT, TEN TEXT, LOAI TEXT, DONGIA INT, SOLUONG INT, GHICHU TEXT, FOREIGN KEY(MAHD) REFERENCES HOADON(MAHD))";
+			string tb_HD = "CREATE TABLE IF NOT EXISTS " + SQLite.tb_HD + "(MãHĐ TEXT PRIMARY KEY, Ngày DATETIME, TổngTiền INT, GiảmGiá FLOAT, ThànhTiền FLOAT, ĐưaTrước FLOAT, CònLại FLOAT)";
+			string tb_DH = "CREATE TABLE IF NOT EXISTS " + SQLite.tb_DH + "([ID] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, MãHĐ TEXT, Tên TEXT, Loại TEXT, ĐơnGiá INT, SốLượng INT, GhiChú TEXT, FOREIGN KEY(MãHĐ) REFERENCES HOADON(MãHĐ))";
 			ExecuteCommand(tb_DH);
 			ExecuteCommand(tb_HD);
 		}
@@ -61,7 +61,7 @@ namespace QuanLyBanHang
 		/// <param name="donHang">Đơn hàng cần thêm</param>
 		public void InsertToDH(DonHang donHang)
 		{
-			string sql = string.Format("INSERT INTO " + tb_DH + " (MAHD, TEN, LOAI, DONGIA, SOLUONG, GHICHU) VALUES ('{0}', '{1}', '{2}', {3}, {4}, '{5}')", donHang.MãHĐ, donHang.Tên, donHang.Loại, donHang.ĐơnGiá, donHang.SốLượng, donHang.GhiChú);
+			string sql = string.Format("INSERT INTO " + tb_DH + " (MãHĐ, Tên, Loại, ĐơnGiá, SốLượng, GhiChú) VALUES ('{0}', '{1}', '{2}', {3}, {4}, '{5}')", donHang.MãHĐ, donHang.Tên, donHang.Loại, donHang.ĐơnGiá, donHang.SốLượng, donHang.GhiChú);
 			ExecuteCommand(sql);
 		}
 
@@ -71,19 +71,19 @@ namespace QuanLyBanHang
 		/// <param name="hoaDon">Hoá đơn cần thêm</param>
 		public void InsertToHD(HoaDon hoaDon)
 		{
-			string sql = string.Format("INSERT INTO " + tb_HD + " (MAHD, NGAY, TONGTIEN, GIAMGIA, THANHTIEN, DUATRUOC, CONLAI) VALUES ('{0}', '{1}', {2}, {3}, {4}, {5}, {6}", hoaDon.MãHĐ, hoaDon.Ngày, hoaDon.TổngTiền, hoaDon.GiảmGiá, hoaDon.ThànhTiền, hoaDon.ĐưaTrước, hoaDon.CònLại);
+			string sql = string.Format("INSERT INTO " + tb_HD + " (MãHĐ, Ngày, TổngTiền, GiảmGiá, ThànhTiền, ĐưaTrước, CònLại) VALUES ('{0}', '{1}', {2}, {3}, {4}, {5}, {6})", hoaDon.MãHĐ, hoaDon.Ngày, hoaDon.TổngTiền, hoaDon.GiảmGiá, hoaDon.ThànhTiền, hoaDon.ĐưaTrước, hoaDon.CònLại);
 			ExecuteCommand(sql);
 		}
 
 		public void UpdateHD(HoaDon hoaDon)
 		{
-			string sql = string.Format("UPDATE  " + tb_HD + " SET NGAY = '{0}', TONGTIEN = '{1}', GIAMGIA = {2}, THANHTIEN = {3}, DUATRUOC = {4}, CONLAI = {5} WHERE MAHD = '" + hoaDon.MãHĐ + "'", hoaDon.Ngày, hoaDon.TổngTiền, hoaDon.GiảmGiá, hoaDon.ThànhTiền, hoaDon.ĐưaTrước, hoaDon.CònLại);
+			string sql = string.Format("UPDATE  " + tb_HD + " SET Ngày = '{0}', TổngTiền = '{1}', GiảmGiá = {2}, ThànhTiền = {3}, ĐưaTrước = {4}, CònLại = {5} WHERE MãHĐ = '" + hoaDon.MãHĐ + "'", hoaDon.Ngày, hoaDon.TổngTiền, hoaDon.GiảmGiá, hoaDon.ThànhTiền, hoaDon.ĐưaTrước, hoaDon.CònLại);
 			ExecuteCommand(sql);
 		}
 
 		public void UpdateDH(DonHang donHang)
 		{
-			string sql = string.Format("UPDATE " + tb_DH + " SET MAHD = '{0}', TEN = '{1}', LOAI = '{2}', DONGIA = {3}, SOLUONG = {4}, GHICHU = '{5} WHERE [ID] = {6}'", donHang.MãHĐ, donHang.Tên, donHang.Loại, donHang.ĐơnGiá, donHang.SốLượng, donHang.GhiChú, donHang.ID);
+			string sql = string.Format("UPDATE " + tb_DH + " SET MãHĐ = '{0}', Tên = '{1}', Loại = '{2}', ĐơnGiá = {3}, SốLượng = {4}, GhiChú = '{5} WHERE [ID] = {6}'", donHang.MãHĐ, donHang.Tên, donHang.Loại, donHang.ĐơnGiá, donHang.SốLượng, donHang.GhiChú, donHang.ID);
 			ExecuteCommand(sql);
 		}
 

@@ -201,6 +201,8 @@ namespace QuanLyBanHang
 			if (dialog == MessageBoxResult.Yes)
 			{
 				ChuyenDonHang_HoaDon();
+				var result = SQLiteHelper.GetValues("SELECT * FROM " + SQLite.tb_HD);
+				dgHoaDon.ItemsSource = result.Tables[0].DefaultView;
 			}
 		}
 
